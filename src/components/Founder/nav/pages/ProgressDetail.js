@@ -56,27 +56,31 @@ function ProgressDetail(props) {
   const currentMonth = months[newDate.getMonth()];
   const currentYear = newDate.getFullYear();
 
-  useEffect(async () => {
-    await axiosInstance.get(`founder/progress/details/${slug}`).then((res) => {
-      const progressDetails = res.data;
-      console.log("nilesp", progressDetails);
-      setProgressDetails({ loading: false, progress: progressDetails });
-      setLearningFromConversation(progressDetails.learning_conversation);
-      setUnplannedAction(progressDetails.unplanned_action_help);
-      setGoals(progressDetails.goals);
-      setAction(progressDetails.action_helped);
-      setPrimaryMetric(progressDetails.primary_metric);
-      setLastWeekMetric(progressDetails.lastweek_metric);
-      setTargetMarket(progressDetails.target_market);
-      setStakeholder(progressDetails.numberof_stakeholder);
-      setStakeholderLearning(progressDetails.learning_stakeholder);
-      setTopPriority(progressDetails.top_priorities);
-    });
-  }, [setProgressDetails]);
+  useEffect(() => {
+    async function getProgressDetails() {
+      await axiosInstance
+        .get(`founder/progress/details/${slug}`)
+        .then((res) => {
+          const progressDetails = res.data;
+          setProgressDetails({ loading: false, progress: progressDetails });
+          setLearningFromConversation(progressDetails.learning_conversation);
+          setUnplannedAction(progressDetails.unplanned_action_help);
+          setGoals(progressDetails.goals);
+          setAction(progressDetails.action_helped);
+          setPrimaryMetric(progressDetails.primary_metric);
+          setLastWeekMetric(progressDetails.lastweek_metric);
+          setTargetMarket(progressDetails.target_market);
+          setStakeholder(progressDetails.numberof_stakeholder);
+          setStakeholderLearning(progressDetails.learning_stakeholder);
+          setTopPriority(progressDetails.top_priorities);
+        });
+    }
+    getProgressDetails();
+  }, [setProgressDetails, slug]);
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     try {
-      setProgressDetails({ ...progressDetails, loading: true });
+      await setProgressDetails({ ...progressDetails, loading: true });
       axiosInstance
         .put(`founder/progress/edit/${progressDetails.progress.id}/`, {
           founder_id: isAuthenticated().user_id,

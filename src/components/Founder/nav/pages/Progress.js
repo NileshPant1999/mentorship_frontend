@@ -1,18 +1,16 @@
-import { Button, Spinner, Stack, Textarea } from "@chakra-ui/react";
-import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
-import axios from "axios";
+import { Spinner, Stack, Textarea } from "@chakra-ui/react";
+import { Checkbox } from "@chakra-ui/react";
 
 import React, { useEffect, useState } from "react";
 import { isAuthenticated } from "../../../../auth";
 import axiosInstance from "../../../../axios";
+import { Line } from "react-chartjs-2";
 
 function Progress(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState();
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
   const [progress, setProgress] = useState({ loading: "false", data: null });
-  const [updated, setUpdated] = useState(false);
+
   var months = [
     "January",
     "February",
@@ -28,16 +26,20 @@ function Progress(props) {
     "December",
   ];
 
-  Date.prototype.getUTCTime = function () {
-    return this.getTime() - this.getTimezoneOffset() * 60000;
-  };
-
   const newDate = new Date();
   const currentNewDate = parseInt(newDate.getUTCDate());
   const currentMonth = months[newDate.getUTCMonth()];
   const currentYear = newDate.getFullYear();
 
-  const getProgressList = async () => {
+  const numOfConversation = [];
+
+  if (progress.data) {
+    progress.data.map((dat) => {
+      numOfConversation.push(dat.conversation);
+    });
+  }
+
+  async function getProgressList() {
     try {
       setIsLoading(true);
       await axiosInstance
@@ -53,28 +55,90 @@ function Progress(props) {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 
-  useEffect(async () => {
-    await getProgressList();
+  useEffect(() => {
+    getProgressList();
     setIsLoading(false);
-  }, [setProgress, updated, setIsLoading]);
+  }, [setProgress, setIsLoading]);
 
   const handleSubmit = async (e) => {
     setIsLoading(true);
+    const slug = parseInt(Math.random() * 1000000);
     try {
       await axiosInstance
         .post(`founder/add/`, {
           founder_id: isAuthenticated().user_id,
-          slug: parseInt(Math.random() * 1000000),
+          slug: slug,
         })
         .then(async (res) => {
+          console.log(res);
           await getProgressList();
           setIsLoading(false);
         });
     } catch (error) {
       console.log(error);
     }
+  };
+
+  console.log("num", numOfConversation);
+
+  const data = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    datasets: [
+      {
+        label: "Conversations",
+        data: [335, 534, 245, 431, 441, 653, 600],
+        fill: true,
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)",
+      },
+      {
+        label: "Stakeholders",
+        data: numOfConversation,
+        fill: false,
+        borderColor: "#742774",
+      },
+    ],
+  };
+
+  const data2 = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    datasets: [
+      {
+        label: "Primary Metric",
+        data: numOfConversation,
+        fill: true,
+        backgroundColor: "rgba(75,192,192,0.2)",
+        borderColor: "rgba(75,192,192,1)",
+      },
+    ],
+  };
+
+  const legend = {
+    display: true,
+    position: "top",
+    labels: {
+      fontColor: "#323130",
+      fontSize: 20,
+    },
+  };
+
+  const options = {
+    title: {
+      display: true,
+      text: "Chart Title",
+    },
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            suggestedMin: 0,
+            suggestedMax: 100,
+          },
+        },
+      ],
+    },
   };
 
   return progress.loading || isLoading ? (
@@ -264,11 +328,29 @@ function Progress(props) {
           </div>
         </div>
         <div>
-          <div className="progress__graph">
-            <h1>Graph 1</h1>
+          <div className=" progress__graph">
+            <h1
+              style={{
+                fontSize: "25px",
+                marginBottom: "30px",
+                paddingTop: "20px",
+              }}
+            >
+              Primary Metric
+            </h1>
+            <Line data={data2} legend={legend} />
           </div>
           <div className="progress__graph">
-            <h1>Graph 2</h1>
+            <h1
+              style={{
+                fontSize: "25px",
+                marginBottom: "30px",
+                paddingTop: "20px",
+              }}
+            >
+              Secondry Metric
+            </h1>
+            <Line data={data} />
           </div>
         </div>
       </div>

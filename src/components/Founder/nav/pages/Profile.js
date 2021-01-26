@@ -2,27 +2,21 @@ import React, { useEffect, useState } from "react";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
   Textarea,
   Stack,
   Radio,
-  RadioGroup,
   Checkbox,
   Spinner,
+  useToast,
+  RadioGroup,
 } from "@chakra-ui/react";
-import { Switch } from "@chakra-ui/react";
 import { Select } from "@chakra-ui/react";
-import { Button, ButtonGroup } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import "./style.css";
 import axiosInstance from "../../../../axios";
 import { isAuthenticated } from "../../../../auth";
-
-const handleUserDetails = () => {};
 
 function Profile() {
   // General Hooks
@@ -44,45 +38,77 @@ function Profile() {
 
   // Company Hooks
 
+  const [startupName, setStartupName] = useState("");
+  const [website, setWebsite] = useState("");
+  const [appLink, setAppLink] = useState("");
+  const [videoLink, setVideoLink] = useState("");
+  const [isLaunched, setIsLaunced] = useState("1");
+  const [stage, setStage] = useState("");
+  const [about, setAbout] = useState("");
+
+  const toast = useToast();
+
+  // Company Hooks
+
   const [companyDetails, setCompanyDetails] = useState({
     details: null,
   });
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsLoading(true);
-    try {
-      await axiosInstance
-        .get(`founder/details/${isAuthenticated().user_id}`)
-        .then((res) => {
-          setIsLoading(false);
-          setCity(res.data.city);
-          setCountry(res.data.country);
-          setFirstName(res.data.first_name);
-          setLastName(res.data.last_name);
-          setMobile(res.data.mobile);
-          setLinkedin(res.data.linkedin);
-          setEmailAddress(res.data.email);
+    async function getFounderDetails() {
+      try {
+        await axiosInstance
+          .get(`founder/details/${isAuthenticated().user_id}`)
+          .then((res) => {
+            setIsLoading(false);
+            setCity(res.data.city);
+            setCountry(res.data.country);
+            setFirstName(res.data.first_name);
+            setLastName(res.data.last_name);
+            setMobile(res.data.mobile);
+            setLinkedin(res.data.linkedin);
+            setEmailAddress(res.data.email);
+          })
+          .catch((err) => {
+            console.log("nilesh", err.response.data);
+          });
+      } catch (error) {
+        setIsLoading(false);
+        toast({
+          position: "top",
+          title: "Message",
+          description: "Please add your details",
+          status: "info",
+          duration: 9000,
+          isClosable: true,
         });
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
+      }
     }
+    getFounderDetails();
   }, []);
 
-  useEffect(async () => {
+  useEffect(() => {
     setIsLoading(true);
-    try {
-      await axiosInstance
-        .get(`company/details/${isAuthenticated().user_id}`)
-        .then((res) => {
-          setIsLoading(false);
-          const allDetails = res.data;
-          setCompanyDetails({ details: allDetails });
-        });
-    } catch (error) {
-      setIsLoading(false);
-      console.log(error);
+    async function getCompanyDetails() {
+      try {
+        await axiosInstance
+          .get(`company/details/${isAuthenticated().user_id}`)
+          .then((res) => {
+            setIsLoading(false);
+            const allDetails = res.data;
+            setStartupName(allDetails.startup_name);
+            setWebsite(allDetails.website);
+            setAbout(allDetails.about);
+            setAppLink(allDetails.app_link);
+            setVideoLink(allDetails.video_link);
+          });
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error);
+      }
     }
+    getCompanyDetails();
   }, [setCompanyDetails]);
 
   console.log(companyDetails);
@@ -115,13 +141,12 @@ function Profile() {
         setSubmitLoading(true);
         axiosInstance
           .post(`company/create/`, {
-            startup_name: "SpaceX",
-            website: "www.spacex.com",
-            about:
-              "Tesla's mission is to accelerate the world's transition to sustainable energy. Tesla was founded in 2003 by a group of engineers who wanted to prove that people didn't need to compromise to drive electric – that electric vehicles can be better, quicker and more fun to drive than gasoline cars.",
+            startup_name: startupName,
+            website: website,
+            about: about,
             is_launched: false,
-            app_link: "www.googleplay.com",
-            video_link: "www.googledrive.com",
+            app_link: appLink,
+            video_link: videoLink,
             customer: isAuthenticated().user_id,
           })
           .then((res) => {
@@ -146,36 +171,28 @@ function Profile() {
             <FormControl id="startup-name" isRequired>
               <FormLabel mt={3}>Startup Name</FormLabel>
               <Input
-                value={
-                  companyDetails.details
-                    ? companyDetails.details.startup_name
-                    : ""
-                }
+                value={startupName}
                 placeholder="Startup Name"
-                onChange={(e) => setFirstName(e.currentTarget.value)}
+                onChange={(e) => setStartupName(e.currentTarget.value)}
               />
             </FormControl>
 
             <FormControl id="website" isRequired>
               <FormLabel mt={3}>Website</FormLabel>
               <Input
-                value={
-                  companyDetails.details ? companyDetails.details.website : ""
-                }
+                value={website}
                 placeholder="Website"
-                onChange={(e) => setLastName(e.currentTarget.value)}
+                onChange={(e) => setWebsite(e.currentTarget.value)}
               />
             </FormControl>
 
             <FormControl id="email">
               <FormLabel mt={3}>Describe your Startup</FormLabel>
               <Textarea
-                value={
-                  companyDetails.details ? companyDetails.details.about : ""
-                }
+                value={about}
                 placeholder="Describe Your Startup"
                 type="email"
-                onChange={(e) => setEmailAddress(e.currentTarget.value)}
+                onChange={(e) => setAbout(e.currentTarget.value)}
               />
             </FormControl>
 
@@ -183,81 +200,74 @@ function Profile() {
               <FormLabel mt={3}>
                 Have you incorporated your company? (legally registered entity)
               </FormLabel>
-              <Stack>
-                <Radio size="md" name="2" value="2">
-                  Yes
-                </Radio>
-                <Radio size="md" name="1" value="1">
-                  No
-                </Radio>
-              </Stack>
+              <RadioGroup defaultValue="1">
+                <Stack>
+                  <Radio size="md" name="2" value="2">
+                    Yes
+                  </Radio>
+                  <Radio size="md" name="1" value="1">
+                    No
+                  </Radio>
+                </Stack>
+              </RadioGroup>
             </FormControl>
 
             <FormControl id="linkedin">
-              <Checkbox mt={5} mb={4}>
-                Have You Launched
-              </Checkbox>
+              <FormLabel mt={3}>Are you Launched</FormLabel>
+              <RadioGroup defaultValue="1">
+                <Stack>
+                  <Radio size="md" name="2" value="2">
+                    Yes
+                  </Radio>
+                  <Radio size="md" name="1" value="1">
+                    No
+                  </Radio>
+                </Stack>
+              </RadioGroup>
             </FormControl>
 
             <FormControl id="gender">
               <FormLabel mt={3}>
                 How Much Effort Do You Put In Startup
               </FormLabel>
-              <Select
-                placeholder="select"
-                onChange={(e) => setGender(e.currentTarget.value)}
-              >
+              <Select onChange={(e) => setGender(e.currentTarget.value)}>
                 <option value="Full Time">Full Time (40+ hours a week)</option>
                 <option value="Part Time">Part Time (20+ hours a week)</option>
                 <option value="Other"> Less 20 hours a week</option>
               </Select>
             </FormControl>
 
-            <FormControl id="phone">
-              <FormLabel mt={3}>Describe your startup stage?</FormLabel>
-              <Stack>
-                <Radio size="md" name="2" value="2">
-                  Idea
-                </Radio>
-                <Radio size="md" name="1" value="1">
-                  MVP
-                </Radio>
-                <Radio size="md" name="1" value="1">
-                  Revenue
-                </Radio>
-              </Stack>
+            <FormControl id="gender">
+              <FormLabel mt={3}>Describe Your Startup Stage</FormLabel>
+              <Select onChange={(e) => setStage(e.currentTarget.value)}>
+                <option value="Idea">Idea Stage</option>
+                <option value="MVP">MVP</option>
+                <option value="Launched">Launched</option>
+              </Select>
             </FormControl>
 
             <FormControl id="google_play" isRequired>
               <FormLabel mt={3}>App Link(Google Play Store)</FormLabel>
               <Input
                 placeholder="Country"
-                value={
-                  companyDetails.details ? companyDetails.details.app_link : ""
-                }
-                onChange={(e) => setCountry(e.currentTarget.value)}
+                value={appLink}
+                onChange={(e) => setAppLink(e.currentTarget.value)}
               />
             </FormControl>
             <FormControl id="apple_play" isRequired>
               <FormLabel mt={3}>App Link(Apple Play Store)</FormLabel>
               <Input
                 placeholder="Country"
-                value={
-                  companyDetails.details ? companyDetails.details.app_link : ""
-                }
-                onChange={(e) => setCountry(e.currentTarget.value)}
+                value={appLink}
+                onChange={(e) => setAppLink(e.currentTarget.value)}
               />
             </FormControl>
             <FormControl id="video" isRequired>
               <FormLabel mt={3}>Video(Demo or Explainer Video)</FormLabel>
               <Input
                 placeholder="Country"
-                value={
-                  companyDetails.details
-                    ? companyDetails.details.video_link
-                    : ""
-                }
-                onChange={(e) => setCountry(e.currentTarget.value)}
+                value={videoLink}
+                onChange={(e) => setVideoLink(e.currentTarget.value)}
               />
             </FormControl>
           </div>
@@ -283,6 +293,7 @@ function Profile() {
           <div className="cofounder__details">
             <img
               className="founder__image"
+              alt="icon"
               src="https://global-uploads.webflow.com/5f4b9ee5f40a6467ebb252ce/5f4bb8b1b532cc603972a7d6_1598798000839-image9-p-1080.jpeg"
             />
             <h1>Delectus Ut quia</h1>
@@ -290,6 +301,7 @@ function Profile() {
           <div className="cofounder__details">
             <img
               className="founder__image"
+              alt="icon"
               src="https://global-uploads.webflow.com/5f4b9ee5f40a6467ebb252ce/5f4bb8b1b532cc603972a7d6_1598798000839-image9-p-1080.jpeg"
             />
             <h1>Delectus Ut quia</h1>
@@ -297,6 +309,7 @@ function Profile() {
           <div className="cofounder__details">
             <img
               className="founder__image"
+              alt="icon"
               src="https://global-uploads.webflow.com/5f4b9ee5f40a6467ebb252ce/5f4bb8b1b532cc603972a7d6_1598798000839-image9-p-1080.jpeg"
             />
             <h1>Delectus Ut quia</h1>
@@ -308,6 +321,7 @@ function Profile() {
 
   const UserDetails = () => {
     const handleSubmit = (e) => {
+      setIsLoading(true);
       try {
         axiosInstance
           .post(`founder/create/`, {
@@ -322,14 +336,33 @@ function Profile() {
             user: isAuthenticated().user_id,
           })
           .then((res) => {
-            console.log("response", res);
+            setIsLoading(false);
+            toast({
+              position: "top",
+              title: "Message",
+              description: "Details Added",
+              status: "info",
+              duration: 9000,
+              isClosable: true,
+            });
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            toast({
+              position: "top",
+              title: "Message",
+              description: "some error occured",
+              status: "warning",
+              duration: 9000,
+              isClosable: true,
+            });
           });
       } catch (error) {
         console.log(error);
       }
     };
     if (isUserDetailsOpen) {
-      return !isLoading || !submitLoading ? (
+      return !isLoading ? (
         <div>
           <div>
             <h1 className="profile__heading">User Details</h1>
@@ -391,11 +424,10 @@ function Profile() {
 
             <FormControl id="gender">
               <FormLabel mt={3}>Gender</FormLabel>
-              <Select
-                placeholder={gender}
-                onChange={(e) => setGender(e.currentTarget.value)}
-              >
-                <option value="Male">Male</option>
+              <Select onChange={(e) => setGender(e.currentTarget.value)}>
+                <option selected value="Male">
+                  Male
+                </option>
                 <option value="Female">Female</option>
                 <option value="Other">Prefer Not To Disclose</option>
               </Select>

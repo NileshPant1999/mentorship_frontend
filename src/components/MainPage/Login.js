@@ -36,7 +36,7 @@ const Login = () => {
     try {
       setIsLoading(true);
       axiosInstance
-        .post(`user/login/`, {
+        .post(`user/signin/`, {
           email: email,
           password: password,
         })
@@ -53,7 +53,7 @@ const Login = () => {
           toast({
             position: "top",
             title: "Message",
-            description: err.response.data.detail,
+            description: "error occured",
             status: "warning",
             duration: 5000,
             isClosable: true,
