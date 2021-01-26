@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e12ca9f7.chunk.css",
+    "main.js": "/static/js/main.31f44f55.chunk.js",
+    "main.js.map": "/static/js/main.31f44f55.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.3d8022d6.js",
+    "runtime-main.js.map": "/static/js/runtime-main.3d8022d6.js.map",
+    "static/js/2.65fc8ccf.chunk.js": "/static/js/2.65fc8ccf.chunk.js",
+    "static/js/2.65fc8ccf.chunk.js.map": "/static/js/2.65fc8ccf.chunk.js.map",
+    "static/js/3.535daf2e.chunk.js": "/static/js/3.535daf2e.chunk.js",
+    "static/js/3.535daf2e.chunk.js.map": "/static/js/3.535daf2e.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.e12ca9f7.chunk.css.map": "/static/css/main.e12ca9f7.chunk.css.map",
+    "static/js/2.65fc8ccf.chunk.js.LICENSE.txt": "/static/js/2.65fc8ccf.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/static/media/Mosk-Normal400.4e24e76b.ttf",
+    "static/media/logo.442606a3.svg": "/static/media/logo.442606a3.svg",
+    "static/media/logo.6ce24c58.svg": "/static/media/logo.6ce24c58.svg",
+    "static/media/menu.96de8baf.svg": "/static/media/menu.96de8baf.svg",
+    "static/media/x.34697784.svg": "/static/media/x.34697784.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3d8022d6.js",
+    "static/js/2.65fc8ccf.chunk.js",
+    "static/css/main.e12ca9f7.chunk.css",
+    "static/js/main.31f44f55.chunk.js"
+  ]
+}

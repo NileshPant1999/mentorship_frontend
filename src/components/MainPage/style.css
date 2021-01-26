@@ -1,0 +1,23 @@
+
+.verification__page{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+@media only screen and (max-width: 600px) {
+  .login__image{
+    display: none;
+}
+.main__login{
+    position: fixed;
+}
+}
+.main__login{
+    position: sticky;
+    bottom: 0;
+    height: 80vh;
+}

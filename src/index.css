@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  font-family:'Mosk', Times, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: whitesmoke;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+  font-family: "Mosk";
+  src: local('Mosk'), url(./fonts/Mosk-Normal400.ttf) format('truetype')
+}

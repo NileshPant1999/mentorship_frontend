@@ -1,0 +1,277 @@
+.profile__header {
+  width: 1000px;
+  text-align: left;
+  height: 100%;
+  margin: auto;
+  background-color: whitesmoke;
+}
+
+#cars {
+  height: 40px;
+  border-radius: 5px;
+  width: 100%;
+  padding-left: 15px;
+  background-color: whitesmoke;
+  border: 1px solid gainsboro;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.profile__header_profile {
+  width: 50%;
+  text-align: left;
+  height: 100%;
+  margin: auto;
+  margin-top: 30px;
+  background-color: whitesmoke;
+  font-family: "Mosk";
+}
+.progress__dateheading {
+  font-size: 25px;
+}
+
+.founder__homeheading {
+  font-size: 50px;
+}
+
+.library__posts {
+  width: 60%;
+  margin: 30px auto;
+  height: 100%;
+  font-family: "Mosk", Times, serif;
+}
+
+.progress__mainbartab {
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: space-around;
+  margin-left: 50px;
+}
+
+.cofounder__tab {
+  height: 79vh;
+}
+
+.profile__heading {
+  font-size: 40px;
+  margin-left: -6px;
+}
+
+.profile__form {
+  margin-top: 50px;
+}
+
+.profile__buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.founder__image {
+  max-height: 50px;
+  max-width: 50px;
+  min-height: 50px;
+  min-width: 50px;
+  margin: 10px 20px;
+  border-radius: 100px;
+}
+
+.post__comp:hover {
+  background-color: whitesmoke;
+}
+
+.post__comp {
+  background-color: white;
+}
+
+.post__component {
+  border: 1px solid gainsboro;
+  display: flex;
+  margin-top: 20px;
+  text-align: left;
+  border-radius: 10px;
+}
+
+.post__image {
+  max-height: 200px;
+  max-width: 250px;
+  min-width: 250px;
+  margin: 30px;
+  box-shadow: 0 0 20px 0 #c7c7c7;
+}
+
+.progress__date {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px 0 20px;
+  margin-bottom: 20px;
+}
+.progress__goals {
+  padding: 0 10px 0 20px;
+  margin-top: 20px;
+}
+
+.progress__feedback {
+  padding: 0 10px 0 20px;
+  margin-top: 20px;
+}
+
+.progress__tab {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress__main {
+  border: 1px solid gainsboro;
+  box-shadow: 0 0 20px 0 #c7c7c7;
+
+  font-family: "Mosk";
+  padding: 10px;
+  margin: 30px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.progress__responsive {
+  background-color: whitesmoke;
+  width: 900px;
+}
+
+.button_progress {
+  background-color: #3aaeea;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.cofounder__details {
+  display: flex;
+  align-items: center;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #c7c7c7;
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+.disable {
+  display: none;
+}
+
+.progress__maintab {
+  padding-left: 120px;
+  height: 92vh
+}
+
+.progress__graph {
+  width: 300px;
+  height: 200px;
+  border: 1px solid black;
+  margin-top: 31px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.founder__home {
+  height: 92vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Mosk", Times, serif;
+}
+
+.progress_heading {
+  font-size: 45px;
+  font-family: "Mosk";
+}
+.progress_date{
+    font-size: 30px;
+}
+
+.edit {
+    color: #3aaeea;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .profile__buttons {
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-weight: normal;
+  }
+  .progress_heading {
+    font-size: 30px;
+    margin-top: 10px;
+    padding-top: 10px;
+    font-family: "Mosk";
+  }
+  .progress_date {
+      font-size: 20px;
+  }
+
+  .progress__dateheading{
+      font-size: 20px;
+  }
+   .progress__date {
+       font-size: 20px;
+   }
+
+  .profile__button {
+    margin-bottom: 15px;
+  }
+
+  .profile__heading {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-left: 1px;
+  }
+  .profile__form {
+    margin-top: 20px;
+  }
+
+  .founder__homeheading {
+    font-size: 25px;
+  }
+
+  .progress__tab {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .progress__maintab {
+    padding-left: 0px;
+    width: 100%;
+    align-items: center;
+  }
+  .progress__mainbartab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+  }
+  .profile__header {
+    width: 90%;
+  }
+  .profile__header_profile {
+    width: 80%;
+  }
+
+  .progress__responsive {
+    width: 105%;
+  }
+  .library__posts {
+    width: 100%;
+  }
+  .post__component {
+    flex-direction: column-reverse;
+    text-align: left;
+  }
+  .post__image {
+    margin-top: 30px;
+    align-items: center;
+    justify-content: center;
+  }
+}

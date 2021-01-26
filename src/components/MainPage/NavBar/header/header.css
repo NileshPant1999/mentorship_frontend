@@ -1,0 +1,56 @@
+.main__navbar{
+    height: 100px;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: sticky;
+    top: 0;
+}
+
+.main__navbarlinks{
+    width: 40%;
+}
+
+li{
+    list-style-type: none;
+}
+
+
+.main__navbarul{
+    display: flex;
+    justify-content: space-around;
+}
+
+.main__navbarlogin{
+    display: flex;
+    width: 23%;
+    justify-content: space-around;
+}
+.main__navbarlogo {
+    text-align: left;
+}
+
+.mobile-menu{
+    display: none;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .main__navbarlinks{
+        display: none;
+    }
+    .main__navbarlogin{
+        display: none;
+    }
+    .main__navbarimg {
+    width: 50%;
+}
+.main__navbar{
+    height: 70px
+}
+.mobile-menu{
+    display: block;
+}
+
+}
