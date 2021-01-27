@@ -8,22 +8,34 @@ function Library() {
   const [category, setCategory] = useState({ refresh: true, option: null });
   console.log(post);
 
-  useEffect(async () => {
-    try {
-      await axiosInstance.get(`company/category`).then((res) => {
-        const allCategory = res.data;
-        setCategory({ refresh: false, option: allCategory });
-      });
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    async function getCategories() {
+      try {
+        await axiosInstance.get(`company/category`).then((res) => {
+          const allCategory = res.data;
+          setCategory({ refresh: false, option: allCategory });
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
+
+    getCategories();
   }, [setCategory]);
 
-  useEffect(async () => {
-    await axiosInstance.get(`company/post`).then((res) => {
-      const allPost = res.data;
-      setPost({ loading: false, post: allPost });
-    });
+  useEffect(() => {
+    async function getAllPost() {
+      try {
+        await axiosInstance.get(`company/post`).then((res) => {
+          const allPost = res.data;
+          setPost({ loading: false, post: allPost });
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getAllPost();
   }, [setPost]);
 
   return !post.loading ? (

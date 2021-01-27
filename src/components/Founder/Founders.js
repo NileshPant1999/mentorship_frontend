@@ -1,13 +1,6 @@
 import React from "react";
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  useParams,
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Navbar from "../Founder/nav/NavBar";
-import Curriculam from "./nav/pages/Curriculam";
-import FounderHome from "./nav/pages/FounderHome";
 import Library from "./nav/pages/Library";
 import Profile from "./nav/pages/Profile";
 import Progress from "./nav/pages/Progress";

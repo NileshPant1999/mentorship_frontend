@@ -32,10 +32,18 @@ function Progress(props) {
   const currentYear = newDate.getFullYear();
 
   const numOfConversation = [];
+  const primaryMetric = [];
 
   if (progress.data) {
-    progress.data.map((dat) => {
+    progress.data.forEach((dat) => {
       numOfConversation.push(dat.conversation);
+      return null;
+    });
+  }
+
+  if (progress.data) {
+    progress.data.forEach((res) => {
+      primaryMetric.push(res.primary_metric);
     });
   }
 
@@ -81,21 +89,19 @@ function Progress(props) {
     }
   };
 
-  console.log("num", numOfConversation);
-
   const data = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
       {
         label: "Conversations",
-        data: [335, 534, 245, 431, 441, 653, 600],
+        data: numOfConversation,
         fill: true,
         backgroundColor: "rgba(75,192,192,0.2)",
         borderColor: "rgba(75,192,192,1)",
       },
       {
         label: "Stakeholders",
-        data: numOfConversation,
+        data: [335, 534, 245, 431, 441, 653, 600],
         fill: false,
         borderColor: "#742774",
       },
@@ -107,7 +113,7 @@ function Progress(props) {
     datasets: [
       {
         label: "Primary Metric",
-        data: numOfConversation,
+        data: primaryMetric,
         fill: true,
         backgroundColor: "rgba(75,192,192,0.2)",
         borderColor: "rgba(75,192,192,1)",
@@ -125,16 +131,12 @@ function Progress(props) {
   };
 
   const options = {
-    title: {
-      display: true,
-      text: "Chart Title",
-    },
     scales: {
       yAxes: [
         {
           ticks: {
             suggestedMin: 0,
-            suggestedMax: 100,
+            suggestedMax: 300,
           },
         },
       ],
@@ -338,7 +340,7 @@ function Progress(props) {
             >
               Primary Metric
             </h1>
-            <Line data={data2} legend={legend} />
+            <Line data={data2} legend={legend} options={options} />
           </div>
           <div className="progress__graph">
             <h1
@@ -350,7 +352,7 @@ function Progress(props) {
             >
               Secondry Metric
             </h1>
-            <Line data={data} />
+            <Line data={data} options={options} />
           </div>
         </div>
       </div>

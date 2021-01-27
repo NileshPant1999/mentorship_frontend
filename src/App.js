@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { ChakraProvider, theme } from "@chakra-ui/react";
 import Login from "./components/MainPage/Login";
