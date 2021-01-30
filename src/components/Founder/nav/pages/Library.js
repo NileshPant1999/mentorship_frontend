@@ -41,11 +41,11 @@ function Library() {
   return !post.loading ? (
     <div className="library__posts">
       <div>
-        <Select backgroundColor="white" placeholder="Select option" size="lg">
-          <option>Customer</option>
-          <option>Product</option>
-          <option>MVP</option>
-          <option>Startup</option>
+        <Select backgroundColor="white" size="lg">
+          {category.option.map((res) => {
+            console.log(category);
+            return <option>{res.title}</option>;
+          })}
         </Select>
       </div>
       <div className="all__post">

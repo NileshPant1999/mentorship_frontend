@@ -8,6 +8,7 @@ import Home from "./components/MainPage/Home";
 import Founders from "./components/Founder/Founders";
 import PrivateRoute from "./auth/PrivateRoute";
 import VerifyEmail from "./components/MainPage/VerifyEmail";
+import ResetPassword from "./components/MainPage/ResetPassword";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const Main = () => {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/verifyemail/:token" component={VerifyEmail} />
+        <Route path="/resetpassword/:token/:uid" component={ResetPassword} />
         <PrivateRoute path="/founder" component={Founders} />
       </Switch>
     </main>

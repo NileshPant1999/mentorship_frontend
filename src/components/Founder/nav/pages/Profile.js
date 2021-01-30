@@ -7,7 +7,6 @@ import {
   Textarea,
   Stack,
   Radio,
-  Checkbox,
   Spinner,
   useToast,
   RadioGroup,
@@ -24,7 +23,6 @@ function Profile() {
   const [isCompanyOpen, setIsCompanyOpen] = useState(false);
   const [isUserDetailsOpen, setIsUserDetailsOpen] = useState(true);
   const [isCofoundersOpen, setIsCofounderOpen] = useState(false);
-  const [submitLoading, setSubmitLoading] = useState(false);
 
   // Founders Hooks
   const [firstName, setFirstName] = useState("");
@@ -42,7 +40,6 @@ function Profile() {
   const [website, setWebsite] = useState("");
   const [appLink, setAppLink] = useState("");
   const [videoLink, setVideoLink] = useState("");
-  const [isLaunched, setIsLaunced] = useState("1");
   const [stage, setStage] = useState("");
   const [about, setAbout] = useState("");
 
@@ -86,7 +83,7 @@ function Profile() {
       }
     }
     getFounderDetails();
-  }, []);
+  }, [toast, stage]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -138,7 +135,6 @@ function Profile() {
   const Company = () => {
     const handleSubmit = (e) => {
       try {
-        setSubmitLoading(true);
         axiosInstance
           .post(`company/create/`, {
             startup_name: startupName,
@@ -150,12 +146,10 @@ function Profile() {
             customer: isAuthenticated().user_id,
           })
           .then((res) => {
-            setSubmitLoading(false);
             console.log(res);
             alert("submitted");
           });
       } catch (error) {
-        setSubmitLoading(false);
         console.log(error);
         alert(error);
       }

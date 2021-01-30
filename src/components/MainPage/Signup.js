@@ -2,25 +2,16 @@ import React, { useState } from "react";
 import {
   Box,
   Flex,
-  IconButton,
-  useColorMode,
   Heading,
-  Text,
-  Link,
   FormControl,
   FormLabel,
   Input,
   Stack,
   Button,
-  Image,
-  HStack,
   Spinner,
 } from "@chakra-ui/react";
-import { Redirect } from "react-router-dom";
 import axiosInstance from "../../axios";
 import { useHistory } from "react-router-dom";
-import { isAuthenticated } from "../../auth";
-import Header from "./NavBar/header/Header";
 import { useToast } from "@chakra-ui/react";
 
 const SignUp = () => {
@@ -93,7 +84,7 @@ const SignUp = () => {
               onChange={(e) => setName(e.currentTarget.value)}
             />
           </FormControl>
-          <FormControl>
+          <FormControl mt={4}>
             <FormLabel>Email</FormLabel>
             <Input
               type="email"
@@ -171,7 +162,7 @@ const SignUp = () => {
       </h1>
     </div>
   ) : (
-    <div>
+    <div className="main__signin">
       <Flex
         minHeight="100vh"
         width="full"
@@ -189,13 +180,19 @@ const SignUp = () => {
         >
           <Flex justifyContent="space-around" alignItems="center">
             <Box p={4}>
-              <img src="https://global-uploads.webflow.com/5f3c09d8572b1a3453aa9c1f/5faac65b405f8d172ef75b8e_Sparklehood%20logo%20grey%20login%20page-p-500.png" />
+              <img
+                alt="logo"
+                src="https://global-uploads.webflow.com/5f3c09d8572b1a3453aa9c1f/5faac65b405f8d172ef75b8e_Sparklehood%20logo%20grey%20login%20page-p-500.png"
+              />
               <LoginHeader />
               {LoginForm()}
             </Box>
             <div className="login__image">
               <Box>
-                <img src="https://global-uploads.webflow.com/5f3c09d8572b1a3453aa9c1f/5faab7a66dfdec1ed6d2ecca_Sparklehood%20platform%20login%20page-p-500.png" />
+                <img
+                  alt="logo"
+                  src="https://global-uploads.webflow.com/5f3c09d8572b1a3453aa9c1f/5faab7a66dfdec1ed6d2ecca_Sparklehood%20platform%20login%20page-p-500.png"
+                />
               </Box>
             </div>
           </Flex>
@@ -205,28 +202,14 @@ const SignUp = () => {
   );
 };
 
-const ThemeSelector = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <Box textAlign="right">
-      <IconButton onClick={toggleColorMode} />
-    </Box>
-  );
-};
-
 const LoginHeader = () => {
   return (
     <div>
-      <Stack
-        fontSize="15px"
-        isInline
-        justifyContent="space-between"
-        mt={4}
-      ></Stack>
-      <Box textAlign="center">
-        <Heading fontSize="35px" pt={3}>
-          Sign Up
-        </Heading>
+      <Stack isInline justifyContent="space-between" mt={4}></Stack>
+      <Box textAlign="left">
+        <p style={{ fontSize: "30px", fontWeight: "500" }}>
+          Get Started with your account in sparklehood
+        </p>
       </Box>
     </div>
   );

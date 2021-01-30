@@ -2,8 +2,8 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import "./fonts/Mosk-Normal400.ttf";
 ReactDOM.render(
   <BrowserRouter>

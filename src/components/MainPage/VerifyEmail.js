@@ -64,7 +64,7 @@ const VerifyEmail = (props) => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [verification_token]);
 
   return isLoading ? (
     <div

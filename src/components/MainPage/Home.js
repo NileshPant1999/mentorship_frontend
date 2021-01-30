@@ -1,45 +1,39 @@
-import { Box, IconButton, useColorMode } from "@chakra-ui/react";
 import React from "react";
-import { Link } from "react-router-dom";
 import Header from "./NavBar/header/Header";
 
 function Home() {
-  const ThemeSelector = () => {
-    const { colorMode, toggleColorMode } = useColorMode();
-    return (
-      <Box textAlign="right" py={4}>
-        <IconButton onClick={toggleColorMode} />
-      </Box>
-    );
-  };
-
   return (
     <div>
       <Header />
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          height: "120vh",
-          backgroundColor: "white",
-        }}
-      ></div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "200vh",
-          backgroundColor: "grey",
-        }}
-      ></div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "200vh",
+          justifyContent: "space-around",
+          height: "89vh",
           backgroundColor: "whitesmoke",
         }}
-      ></div>
+      >
+        <div
+          style={{
+            fontFamily: "Mosk",
+            fontSize: "120px",
+            color: "#08aeea",
+            fontWeight: "800",
+            textAlign: "center",
+            marginTop: "70px",
+          }}
+        >
+          <h1>Feed</h1>
+          <h1>Your</h1>
+          <h1>Sparkle</h1>
+        </div>
+        <div>
+          <img
+            src="https://global-uploads.webflow.com/5f3c09d8572b1a3453aa9c1f/5f3e2a2422284581c60f993e_cartoon_pegasus_signature-p-800.jpeg"
+            alt="img"
+          />
+        </div>
+      </div>
     </div>
   );
 }

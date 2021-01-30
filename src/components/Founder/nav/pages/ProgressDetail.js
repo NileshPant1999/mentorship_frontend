@@ -1,19 +1,17 @@
 import { Button, Input, Spinner, Textarea } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../../axios";
-import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 import { isAuthenticated } from "../../../../auth";
 import { useToast } from "@chakra-ui/react";
-import { List, ListItem, ListIcon } from "@chakra-ui/react";
+import { List, ListItem } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 
-import { PhoneIcon, CloseIcon, WarningIcon } from "@chakra-ui/icons";
+import { CloseIcon } from "@chakra-ui/icons";
 
 function ProgressDetail(props) {
   const slug = props.match.params.slug;
   const [unplannedAction, setUnplannedAction] = useState("");
   const [learningFromConversation, setLearningFromConversation] = useState("");
-  const [coachFeedback, setCoachFeedback] = useState("");
   const [primaryMetric, setPrimaryMetric] = useState();
   const [lastWeekMetric, setLastWeekMetric] = useState();
   const [targetMarket, setTargetMarket] = useState("");

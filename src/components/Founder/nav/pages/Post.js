@@ -8,7 +8,7 @@ const Post = (props) => {
       {posts.map((post) => {
         return (
           <div className="post__comp">
-            <a href={post.link} target="_blank">
+            <a href={post.link}>
               <div className="post__component">
                 <div style={{ marginLeft: "20px", marginTop: "20px" }}>
                   <h1 style={{ fontWeight: "600", marginTop: "3px" }}>
@@ -22,7 +22,11 @@ const Post = (props) => {
                   </p>
                 </div>
                 <div>
-                  <img src={post.image_link} className="post__image" />
+                  <img
+                    alt="post"
+                    src={post.image_link}
+                    className="post__image"
+                  />
                 </div>
               </div>
             </a>

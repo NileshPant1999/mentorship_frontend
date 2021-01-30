@@ -2,33 +2,38 @@ import React, { useState } from "react";
 import {
   Box,
   Flex,
-  IconButton,
-  useColorMode,
   Heading,
-  Text,
-  Link,
   FormControl,
   FormLabel,
   Input,
   Stack,
   Button,
-  Image,
   Spinner,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { Redirect } from "react-router-dom";
+
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import axiosInstance from "../../axios";
-import { isAuthenticated } from "../../auth";
 import "./style.css";
-import Header from "./NavBar/header/Header";
 import { useToast } from "@chakra-ui/react";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const [email, setEmail] = useState("");
+  const [resetEmail, setResetEmail] = useState("");
   const [password, setPassword] = useState("");
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,6 +52,45 @@ const Login = () => {
           axiosInstance.defaults.headers["Authorization"] =
             "JWT " + localStorage.getItem("access_token");
           history.push("/founder");
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          toast({
+            position: "top",
+            title: "Message",
+            description: "error occured",
+            status: "warning",
+            duration: 5000,
+            isClosable: true,
+          });
+        });
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      alert(error);
+    }
+  };
+
+  const handleResetPassword = (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      axiosInstance
+        .post(`user/request-reset-email/`, {
+          email: resetEmail,
+        })
+        .then((res) => {
+          setIsLoading(false);
+          history.push("/login");
+          onClose();
+          toast({
+            position: "top",
+            title: "Message",
+            description: "We have sent you a email to reset password",
+            status: "info",
+            duration: 5000,
+            isClosable: true,
+          });
         })
         .catch((err) => {
           setIsLoading(false);
@@ -93,7 +137,37 @@ const Login = () => {
           <Stack fontSize="20px" isInline justifyContent="space-between" mt={4}>
             <a href="/signup">Sign Up</a>
             <Box>
-              <a href="/forgetpassword">Forget Your password</a>
+              <div style={{ cursor: "pointer" }} onClick={onOpen}>
+                Forget Your password
+              </div>
+              <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>Reset Your Password</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody pb={6}>
+                    <FormControl>
+                      <FormLabel>Please Enter Your Email Address</FormLabel>
+                      <Input
+                        onChange={(e) => setResetEmail(e.currentTarget.value)}
+                        placeholder="elon@tesla.com"
+                      />
+                    </FormControl>
+
+                    <FormControl mt={4}></FormControl>
+                  </ModalBody>
+
+                  <ModalFooter>
+                    <Button
+                      onClick={handleResetPassword}
+                      colorScheme="blue"
+                      mr={3}
+                    >
+                      Send Mail
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </Box>
           </Stack>
         </form>
@@ -144,13 +218,19 @@ const Login = () => {
         >
           <Flex justifyContent="space-around" alignItems="center">
             <Box p={4}>
-              <img src="https://global-uploads.webflow.com/5f3c09d8572b1a3453aa9c1f/5faac65b405f8d172ef75b8e_Sparklehood%20logo%20grey%20login%20page-p-500.png" />
+              <img
+                alt="logo"
+                src="https://global-uploads.webflow.com/5f3c09d8572b1a3453aa9c1f/5faac65b405f8d172ef75b8e_Sparklehood%20logo%20grey%20login%20page-p-500.png"
+              />
               <LoginHeader />
               {LoginForm()}
             </Box>
             <div className="login__image">
               <Box>
-                <img src="https://global-uploads.webflow.com/5f3c09d8572b1a3453aa9c1f/5faab7a66dfdec1ed6d2ecca_Sparklehood%20platform%20login%20page-p-500.png" />
+                <img
+                  alt="logo"
+                  src="https://global-uploads.webflow.com/5f3c09d8572b1a3453aa9c1f/5faab7a66dfdec1ed6d2ecca_Sparklehood%20platform%20login%20page-p-500.png"
+                />
               </Box>
             </div>
           </Flex>
@@ -160,19 +240,12 @@ const Login = () => {
   );
 };
 
-const ThemeSelector = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <Box textAlign="right" py={4}>
-      <IconButton onClick={toggleColorMode} />
-    </Box>
-  );
-};
-
 const LoginHeader = () => {
   return (
     <Box textAlign="center">
-      <Heading fontSize="60px">Log In</Heading>
+      <Heading fontWeight="500" fontFamily="Mosk" fontSize="50px">
+        Login
+      </Heading>
     </Box>
   );
 };
