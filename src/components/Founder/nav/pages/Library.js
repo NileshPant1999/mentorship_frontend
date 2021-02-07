@@ -6,7 +6,6 @@ import Post from "./Post";
 function Library() {
   const [post, setPost] = useState({ loading: true, post: null });
   const [category, setCategory] = useState({ refresh: true, option: null });
-  console.log(post);
 
   useEffect(() => {
     async function getCategories() {

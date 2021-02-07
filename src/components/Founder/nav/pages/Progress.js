@@ -9,6 +9,7 @@ import { Line } from "react-chartjs-2";
 function Progress(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [date, setDate] = useState();
+  const [month, setMonth] = useState();
   const [progress, setProgress] = useState({ loading: "false", data: null });
 
   var months = [
@@ -28,11 +29,14 @@ function Progress(props) {
 
   const newDate = new Date();
   const currentNewDate = parseInt(newDate.getUTCDate());
-  const currentMonth = months[newDate.getUTCMonth()];
+  const currentMonth = newDate.getUTCMonth() + 1;
   const currentYear = newDate.getFullYear();
 
   const numOfConversation = [];
   const primaryMetric = [];
+
+  console.log(month);
+  console.log(currentMonth);
 
   if (progress.data) {
     progress.data.forEach((dat) => {
@@ -57,8 +61,8 @@ function Progress(props) {
           setProgress({ load: "true", data: allProgress });
           const date = res.data[0].end_date;
           const resp = date.split("-");
-          console.log(resp);
           setDate(resp[2]);
+          setMonth(resp[1].split("0")[1]);
         });
     } catch (error) {
       console.log(error);
@@ -100,8 +104,8 @@ function Progress(props) {
         borderColor: "rgba(75,192,192,1)",
       },
       {
-        label: "Stakeholders",
-        data: [335, 534, 245, 431, 441, 653, 600],
+        label: "Primary Metric",
+        data: primaryMetric,
         fill: false,
         borderColor: "#742774",
       },
@@ -179,7 +183,13 @@ function Progress(props) {
         }}
       >
         <h1 style={{ fontSize: "35px", fontFamily: "Mosk" }}>Weekely Update</h1>
-        <div className={date >= currentNewDate ? "disable" : "enable"}>
+        <div
+          className={
+            date <= currentNewDate || month < currentMonth
+              ? "enable"
+              : "disable"
+          }
+        >
           <button className="button_progress" onClick={handleSubmit}>
             Add Progress
           </button>
@@ -189,12 +199,16 @@ function Progress(props) {
         <div className="progress__responsive">
           <div>
             {progress.data.map((res) => {
+              const startMonth =
+                months[res.start_date.split("-")[1].split("0")[1] - 1];
+              const endMonth =
+                months[res.end_date.split("-")[1].split("0")[1] - 1];
               return (
                 <div className="progress__main">
                   <div className="progress__date">
-                    <h1 className="progress__dateheading">{`${currentMonth} ${
+                    <h1 className="progress__dateheading">{`${startMonth} ${
                       res.start_date.split("-")[2]
-                    } - ${currentMonth} ${
+                    } - ${endMonth} ${
                       res.end_date.split("-")[2]
                     }, ${currentYear}`}</h1>
                     <a

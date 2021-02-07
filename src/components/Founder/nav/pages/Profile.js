@@ -284,29 +284,13 @@ function Profile() {
       return (
         <div className="cofounder__tab">
           <h1 className="profile__heading">Co Founders</h1>
-          <div className="cofounder__details">
-            <img
-              className="founder__image"
-              alt="icon"
-              src="https://global-uploads.webflow.com/5f4b9ee5f40a6467ebb252ce/5f4bb8b1b532cc603972a7d6_1598798000839-image9-p-1080.jpeg"
+          <div className="invite_cofounder">
+            <Input
+              border="2px solid grey"
+              width="80%"
+              placeholder="Enter Email"
             />
-            <h1>Delectus Ut quia</h1>
-          </div>
-          <div className="cofounder__details">
-            <img
-              className="founder__image"
-              alt="icon"
-              src="https://global-uploads.webflow.com/5f4b9ee5f40a6467ebb252ce/5f4bb8b1b532cc603972a7d6_1598798000839-image9-p-1080.jpeg"
-            />
-            <h1>Delectus Ut quia</h1>
-          </div>
-          <div className="cofounder__details">
-            <img
-              className="founder__image"
-              alt="icon"
-              src="https://global-uploads.webflow.com/5f4b9ee5f40a6467ebb252ce/5f4bb8b1b532cc603972a7d6_1598798000839-image9-p-1080.jpeg"
-            />
-            <h1>Delectus Ut quia</h1>
+            <Button colorScheme="twitter">Send Email</Button>
           </div>
         </div>
       );

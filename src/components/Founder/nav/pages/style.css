@@ -19,6 +19,12 @@
   font-size: 25px;
 }
 
+.invite_cofounder {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
 #cars {
   height: 40px;
   border-radius: 5px;
